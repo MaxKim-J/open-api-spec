@@ -1,0 +1,101 @@
+openapi: 3.0.0
+servers:
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/max396/exmple2/1.0.0
+info:
+  description: Developers API
+  version: "1.0.0"
+  title: Simple Developer API
+  contact:
+    email: you@your-company.com
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+tags:
+  - name: admins
+    description: Secured Admin-only calls
+  - name: developers
+    description: Operations available to regular developers
+paths:
+  /developers:
+    get:
+      tags:
+        - developers
+      summary: searches all developers
+      operationId: searchInventory
+      description: |
+        모든 개발자들을 조회합니다
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Developer'
+              example:
+                - title: 'r'
+                  id : 0
+                  name : '김종혁'
+                  age : 26
+                  position : 'frontend'
+                  major: '영문학'
+                - title : 'r'
+                  id : 1
+                  name : '황인준'
+                  age: 26
+                  position : 'backend'
+                  major: '정보시스템'
+        '400':
+          description: bad input parameter
+    post:
+      tags:
+        - admins
+      summary: adds an inventory item
+      operationId: addInventory
+      description: Adds an item to the system
+      responses:
+        '201':
+          description: item created
+        '400':
+          description: 'invalid input, object invalid'
+        '409':
+          description: an existing item already exists
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Developer'
+        description: Inventory item to add
+components:
+  schemas:
+    Developer:
+      type: object
+      required:
+        - id
+        - name
+        - age
+        - position
+        - major
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: '김종혁'
+        age:
+          type: integer
+          example: 26
+        position:
+          type: string
+          enum :
+            - frontend
+            - backend
+            - devops
+          example: 'frontend'
+        major:
+          type: string
+          example: '영문학'
