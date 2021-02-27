@@ -1,8 +1,9 @@
 openapi: 3.0.0
 servers:
   # Added by API Auto Mocking Plugin
-  - description: SwaggerHub API Auto Mocking
-    url: https://virtserver.swaggerhub.com/max396/exmple2/1.0.0
+  - url: http://127.0.0.1:4010
+  - url: https://virtserver.swaggerhub.com/max396/exmple2/1.0.0
+    description: Devlopers REST API
 info:
   description: Developers API
   version: "1.0.0"
@@ -36,14 +37,12 @@ paths:
                 items:
                   $ref: '#/components/schemas/Developer'
               example:
-                - title: 'r'
-                  id : 0
+                - id : 0
                   name : '김종혁'
                   age : 26
                   position : 'frontend'
                   major: '영문학'
-                - title : 'r'
-                  id : 1
+                - id : 1
                   name : '황인준'
                   age: 26
                   position : 'backend'
@@ -52,10 +51,10 @@ paths:
           description: bad input parameter
     post:
       tags:
-        - admins
-      summary: adds an inventory item
+        - developers
+      summary: Add new Developer
       operationId: addInventory
-      description: Adds an item to the system
+      description: '새로운 개발자를 추가합니다'
       responses:
         '201':
           description: item created
@@ -68,6 +67,12 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/Developer'
+            example: 
+               - id : 2
+                 name : '최범수'
+                 age : 26
+                 position : 'frontend'
+                 major: '컴퓨터공학'
         description: Inventory item to add
 components:
   schemas:
@@ -82,20 +87,20 @@ components:
       properties:
         id:
           type: integer
-          example: 1
+          example: 3
         name:
           type: string
-          example: '김종혁'
+          example: '김성익'
         age:
           type: integer
-          example: 26
+          example: 25
         position:
           type: string
           enum :
             - frontend
             - backend
             - devops
-          example: 'frontend'
+          example: 'devops'
         major:
           type: string
-          example: '영문학'
+          example: '정보시스템'
