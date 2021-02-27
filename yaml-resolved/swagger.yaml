@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
-  title: Simple Inventory API
-  description: This is a simple API
+  title: Simple Developer API
+  description: Developers API
   contact:
     email: you@your-company.com
   license:
@@ -9,76 +9,63 @@ info:
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   version: 1.0.0
 servers:
+- url: http://127.0.0.1:4010
 - url: https://virtserver.swaggerhub.com/max396/exmple2/1.0.0
-  description: SwaggerHub API Auto Mocking
+  description: Devlopers REST API
 tags:
 - name: admins
   description: Secured Admin-only calls
 - name: developers
   description: Operations available to regular developers
 paths:
-  /inventory:
+  /developers:
     get:
       tags:
       - developers
-      summary: searches inventory
+      summary: searches all developers
       description: |
-        By passing in the appropriate options, you can search for
-        available inventory in the system
+        모든 개발자들을 조회합니다
       operationId: searchInventory
-      parameters:
-      - name: searchString
-        in: query
-        description: pass an optional search string for looking up inventory
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-      - name: skip
-        in: query
-        description: number of records to skip for pagination
-        required: false
-        style: form
-        explode: true
-        schema:
-          minimum: 0
-          type: integer
-          format: int32
-      - name: limit
-        in: query
-        description: maximum number of records to return
-        required: false
-        style: form
-        explode: true
-        schema:
-          maximum: 50
-          minimum: 0
-          type: integer
-          format: int32
       responses:
         "200":
-          description: search results matching criteria
+          description: OK
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/InventoryItem'
+                  $ref: '#/components/schemas/Developer'
+              example:
+              - id: 0
+                name: 김종혁
+                age: 26
+                position: frontend
+                major: 영문학
+              - id: 1
+                name: 황인준
+                age: 26
+                position: backend
+                major: 정보시스템
         "400":
           description: bad input parameter
     post:
       tags:
-      - admins
-      summary: adds an inventory item
-      description: Adds an item to the system
+      - developers
+      summary: Add new Developer
+      description: 새로운 개발자를 추가합니다
       operationId: addInventory
       requestBody:
         description: Inventory item to add
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/InventoryItem'
+              $ref: '#/components/schemas/Developer'
+            example:
+            - id: 2
+              name: 최범수
+              age: 26
+              position: frontend
+              major: 컴퓨터공학
       responses:
         "201":
           description: item created
@@ -88,39 +75,31 @@ paths:
           description: an existing item already exists
 components:
   schemas:
-    InventoryItem:
+    Developer:
       required:
+      - age
       - id
-      - manufacturer
+      - major
       - name
-      - releaseDate
+      - position
       type: object
       properties:
         id:
-          type: string
-          format: uuid
-          example: d290f1ee-6c54-4b01-90e6-d701748f0851
+          type: integer
+          example: 3
         name:
           type: string
-          example: Widget Adapter
-        releaseDate:
+          example: 김성익
+        age:
+          type: integer
+          example: 25
+        position:
           type: string
-          format: date-time
-          example: 2016-08-29T09:12:33.001Z
-        manufacturer:
-          $ref: '#/components/schemas/Manufacturer'
-    Manufacturer:
-      required:
-      - name
-      type: object
-      properties:
-        name:
+          example: devops
+          enum:
+          - frontend
+          - backend
+          - devops
+        major:
           type: string
-          example: ACME Corporation
-        homePage:
-          type: string
-          format: url
-          example: https://www.acme-corp.com
-        phone:
-          type: string
-          example: 408-867-5309
+          example: 정보시스템
