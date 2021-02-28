@@ -25,7 +25,7 @@ paths:
       summary: searches all developers
       description: |
         모든 개발자들을 조회합니다
-      operationId: searchInventory
+      operationId: getDevelopers
       responses:
         "200":
           description: OK
@@ -53,7 +53,7 @@ paths:
       - developers
       summary: Add new Developer
       description: 새로운 개발자를 추가합니다
-      operationId: addInventory
+      operationId: postDeveloper
       requestBody:
         description: Inventory item to add
         content:
